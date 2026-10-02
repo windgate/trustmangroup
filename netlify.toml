@@ -1,0 +1,55 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Legacy Joomla URLs -> clean URLs (preserves inbound links and SEO)
+[[redirects]]
+  from = "/index.php"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index.php/about"
+  to = "/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index.php/consulting"
+  to = "/consulting"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index.php/appraisals"
+  to = "/appraisals"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index.php/estate-liquidations"
+  to = "/estate-liquidations"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index.php/contact-us"
+  to = "/contact"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+<Base title="About" description="Trust Management Group, LLP: expert consulting in all forms of personal trust and estate matters, including fiduciary litigation. Led by Gary Matesic, AEP®, TEP®.">
+  <PageHero title="About Trust Management Group, LLP" lede="Expert consulting in all forms of personal trust and estate matters, including fiduciary litigation." />
+
+  <section class="band">
+    <div class="container layout">
+      <aside class="profile card">
+        <h2>Gary Matesic</h2>
+        <p class="creds">AEP®, TEP®<br />Managing Partner</p>
+        <p><a class="btn btn-outline-dark" href="/consulting#gary">See full biography</a></p>
+        <ul class="list-clean links">
+          <li><a href={site.linkedin} rel="noopener" target="_blank">LinkedIn profile</a></li>
+          <li><a href={site.vcard} download>Download Gary’s vCard</a></li>
+          <li><a href={site.phoneHref}>{site.phone}</a></li>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        </ul>
+      </aside>
+      <div class="prose">
+        <p>Trust Management Group, LLP was formed in {site.since} by longtime trust and wealth management professional Gary Matesic, along with Plano entrepreneur, grant writer and Wharton School alum Mike Shea, to provide litigation consulting and expert witness testimony in breach of fiduciary duty cases.</p>
+        <p>We are pleased to announce that after spending the past 13 years building and managing bank trust and wealth management departments, Gary has returned to Trust Management Group and his previous practice of expert consulting in all forms of non-litigation personal trust and estate matters, together with supporting plaintiffs, defendants, and their legal counsel with respect to fiduciary controversies.</p>
+        <p>In addition, he continues to consult on, appraise, acquire, maintain, and liquidate not only individual collector motor vehicles, but entire collections. Gary is also well-equipped to assist fiduciaries, their advisors, and individuals in the disposition and acquisition of late-model vehicles typically owned by estates, trusts, and guardianships.</p>
+        <p><strong>Please call or email to discuss your particular needs.</strong></p>
+        <p><a href={site.phoneHref}>{site.phone}</a> &nbsp;|&nbsp; <a href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .layout { display: grid; grid-template-columns: 300px 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .profile h2 { margin-bottom: .2rem; font-size: 1.6rem; }
+  .creds { color: var(--brass); font-weight: 600; letter-spacing: .04em; }
+  .links { margin-top: 1.25rem; font-size: .95rem; }
+  .links li { margin-bottom: .4rem; }
+  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+</style>

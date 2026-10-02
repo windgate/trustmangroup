@@ -1,0 +1,33 @@
+---
+import { nav, site } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container grid">
+    <div>
+      <p class="since">Since {site.since}</p>
+      <p class="name"><strong>{site.principal}</strong><br />{site.name}</p>
+      <p class="addr">{site.address.map((l) => <>{l}<br /></>)}</p>
+      <p><a href={site.phoneHref}>{site.phone}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+  <div class="container legal">© {year} {site.name}. All Rights Reserved.</div>
+</footer>
+
+<style>
+  .site-footer { background: var(--navy-900); color: #c9d3e3; padding-block: 3.5rem 1.5rem; font-size: .95rem; }
+  .site-footer a { color: #fff; text-decoration: none; }
+  .site-footer a:hover { color: var(--brass-light); text-decoration: underline; }
+  .grid { grid-template-columns: 1.5fr 1fr; gap: 2rem; }
+  .since { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--brass-light); font-weight: 600; margin-bottom: .75rem; }
+  .name { color: #fff; font-family: var(--font-display); font-size: 1.1rem; }
+  ul { list-style: none; padding: 0; margin: 0; columns: 2; }
+  li { margin-bottom: .5rem; }
+  .legal { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,.15); font-size: .85rem; color: #94a3bd; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+</style>

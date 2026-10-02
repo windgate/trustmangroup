@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { appraisal, site } from '../data/site';
+---
+<Base title="Appraisals" description="USPAP-compliant motor vehicle appraisals by Gary Matesic for insurance, litigation, diminished value, and Federal Estate Tax purposes. Collections appraised, bought, and sold.">
+  <PageHero title="Appraisal Services" lede="Expert automobile appraisals for insurance, litigation, diminished value, and Federal Estate Tax purposes." />
+
+  <section class="band">
+    <div class="container layout">
+      <div class="prose">
+        <span class="eyebrow">Motor Vehicle Appraiser</span>
+        <h2>Gary Matesic</h2>
+        <p class="affil">Trust Management Group, LLP / JLA Treasures, LLC</p>
+        <hr class="rule" />
+        {appraisal.intro.map((p) => <p>{p}</p>)}
+        <p><a href={site.vcard} download>Download Gary’s vCard</a></p>
+      </div>
+      <div class="card callout">
+        <h3>Expert Automobile Appraisals</h3>
+        <p>{appraisal.services}</p>
+        <a class="btn btn-primary" href="/contact">Request an appraisal</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="container">
+      <h2>Career Highlights</h2>
+      <hr class="rule" />
+      <ul class="list-clean list-ticks cols">
+        {appraisal.highlights.map((h) => <li>{h}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container grid grid-2 two">
+      <div>
+        <h2>Honors, Awards &amp; Appearances</h2>
+        <hr class="rule" />
+        <ul class="list-clean honors">
+          {appraisal.honors.map((h) => (
+            <li><span class="yr">{h.year}</span><span>{h.text} <em>({h.car})</em></span></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2>Notable Vehicles Appraised</h2>
+        <hr class="rule" />
+        <ul class="list-clean list-ticks vehicles">
+          {appraisal.vehicles.map((v) => <li>{v}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {appraisal.gallery.length > 0 && (
+    <section class="band alt">
+      <div class="container">
+        <h2>Vehicles We Have Appraised, Bought, and Sold</h2>
+        <hr class="rule" />
+        <div class="gallery">
+          {appraisal.gallery.map((g) => (
+            <a href={g.src}><img src={g.src} alt={g.alt} loading="lazy" decoding="async" /></a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="band dark">
+    <div class="container prose-wide">
+      <span class="eyebrow" style="color: var(--brass-light)">Affiliate</span>
+      <h2>JLA Treasures, LLC</h2>
+      {appraisal.affiliate.map((p) => <p>{p}</p>)}
+      <a class="btn btn-outline" href="https://jlatreasures.com" rel="noopener" target="_blank">Visit JLA Treasures</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .layout { display: grid; grid-template-columns: 1.6fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .affil { color: var(--ink-soft); font-style: italic; margin-top: -.4rem; }
+  .callout { position: sticky; top: 7.5rem; }
+  .cols { columns: 2 340px; column-gap: 3rem; }
+  .cols li { break-inside: avoid; }
+  .two { gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .honors li { display: grid; grid-template-columns: 4.2rem 1fr; gap: .5rem; margin-bottom: 1rem; }
+  .yr { font-family: var(--font-display); color: var(--brass); font-weight: 600; font-size: 1.15rem; }
+  .vehicles { columns: 1; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius); }
+  .prose-wide { max-width: 80ch; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } .callout { position: static; } }
+</style>

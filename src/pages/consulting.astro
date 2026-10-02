@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { consultingServices, garyBio } from '../data/site';
+---
+<Base title="Consulting" description="Fiduciary reviews, estate management assistance, litigation support, expert witness testimony, trustee selection, investment manager searches, and attorney referrals in Dallas–Fort Worth and across Texas.">
+  <PageHero title="Consulting Services" lede="Practical, experienced guidance for fiduciaries, their advisors, and their counsel." />
+
+  <section class="band">
+    <div class="container">
+      <div class="grid grid-3">
+        {consultingServices.map((s, i) => (
+          <article class="card">
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt" id="gary">
+    <div class="container">
+      <span class="eyebrow">Managing Partner</span>
+      <h2>Gary Matesic, AEP®, TEP®</h2>
+      <hr class="rule" />
+      <div class="prose">
+        {garyBio.intro.map((p) => <p>{p}</p>)}
+      </div>
+      <h3 class="hint">Select a heading to read more</h3>
+      <div class="accordions">
+        {garyBio.sections.map((sec, i) => (
+          <details class="accordion" open={i === 0}>
+            <summary>{sec.title}</summary>
+            <div class="body">
+              <ul class="list-clean list-ticks">
+                {sec.items.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hint { font-family: var(--font-body); font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; margin: 2rem 0 1rem; }
+  .accordions { max-width: 860px; }
+</style>

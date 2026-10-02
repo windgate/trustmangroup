@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+---
+<Base title="Contact" description="Contact Gary Matesic at Trust Management Group, LLP in Dallas, Texas by phone, email, or the form below.">
+  <PageHero title="Contact Us" lede="Please call or email to discuss your particular needs." />
+
+  <section class="band">
+    <div class="container layout">
+      <div>
+        <form name="contact" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hp" aria-hidden="true"><label>Don’t fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="opt">(optional)</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+          <div class="field">
+            <label for="message">How can we help?</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Send</button>
+        </form>
+      </div>
+      <aside class="card">
+        <h3>Call us with questions</h3>
+        <p><a class="big" href={site.phoneHref}>{site.phone}</a></p>
+        <h3>Or email us</h3>
+        <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+        <h3>Mail</h3>
+        <p>{site.name}<br />{site.address.map((l) => <>{l}<br /></>)}</p>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .hp { position: absolute; left: -9999px; }
+  .field { margin-bottom: 1.25rem; }
+  label { display: block; font-weight: 600; font-size: .92rem; margin-bottom: .35rem; color: var(--navy-900); }
+  .opt { font-weight: 400; color: var(--ink-soft); }
+  input, textarea {
+    width: 100%; padding: .8rem .9rem; font: inherit; color: var(--ink);
+    background: #fff; border: 1px solid #b9b19c; border-radius: var(--radius);
+  }
+  input:focus, textarea:focus { border-color: var(--navy-700); }
+  .big { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; text-decoration: none; }
+  aside h3 { font-size: 1rem; margin-bottom: .2rem; color: var(--brass); font-family: var(--font-body); text-transform: uppercase; letter-spacing: .12em; }
+  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+</style>

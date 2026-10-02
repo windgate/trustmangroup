@@ -1,0 +1,11 @@
+---
+interface Props { title: string; lede?: string }
+const { title, lede } = Astro.props;
+---
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow" style="color: var(--brass-light)">Trust Management Group</span>
+    <h1>{title}</h1>
+    {lede && <p>{lede}</p>}
+  </div>
+</section>

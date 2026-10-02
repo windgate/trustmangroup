@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+---
+<Base title="Estate Liquidations" description="Estate liquidations conducted under strict trust principles with no conflicts of interest or self-dealing, backed by a 49-year reputation for integrity. Delivered with affiliate JLA Treasures.">
+  <PageHero title="Estate Liquidations" lede="Our clients’ needs come first. Period." />
+
+  <section class="band">
+    <div class="container layout">
+      <div class="prose">
+        <p>We stake a 49-year business reputation of absolute integrity in the personal trust and estate management business on each and every engagement.</p>
+        <p>While estate liquidations do not constitute <em>formal</em> fiduciary relationships, they certainly qualify under the “informal” fiduciary standard in Texas. We conduct our business with adherence to strict trust principles. We always avoid conflicts of interest and self-dealing.</p>
+        <p>Professionals can rest assured that our experience and reputation will help to protect them as they administer their clients’ property.</p>
+        <a class="btn btn-primary" href="https://jlatreasures.com" rel="noopener" target="_blank">Visit JLA Treasures</a>
+      </div>
+      <aside class="card">
+        <span class="eyebrow">Our Affiliate</span>
+        <h3>JLA Treasures, LLC</h3>
+        <p>Estate sales, appraisals of household property, antiques and collectibles, and online auctions, led by Carol Matesic, ISA CAPP.</p>
+        <a href="https://jlatreasures.com" rel="noopener" target="_blank">jlatreasures.com →</a>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .prose p:first-child { font-size: 1.25rem; font-family: var(--font-display); color: var(--navy-900); }
+  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+</style>
