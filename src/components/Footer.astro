@@ -1,33 +1,40 @@
 ---
-import { nav, site } from '../data/site';
+import { site } from '../data/site';
+import { firstImage } from '../lib/assets';
 const year = new Date().getFullYear();
+const reverseLogo = firstImage('trust-logo-reverse-400.png', 'trust-logo-reverse-400-2.png');
 ---
 <footer class="site-footer">
-  <div class="container grid">
-    <div>
-      <p class="since">Since {site.since}</p>
-      <p class="name"><strong>{site.principal}</strong><br />{site.name}</p>
-      <p class="addr">{site.address.map((l) => <>{l}<br /></>)}</p>
-      <p><a href={site.phoneHref}>{site.phone}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+  <div class="main">
+    <div class="container inner">
+      <div class="brand">
+        {reverseLogo
+          ? <img src={reverseLogo} alt="Trust Management Group" width="170" />
+          : <span class="wordmark">TRUST<small>MANAGEMENT GROUP</small></span>}
+        <p class="since">Since {site.since}</p>
+      </div>
+      <address>
+        <strong>{site.principal}</strong><br />
+        {site.name}<br />
+        {site.address.map((l) => <>{l}<br /></>)}
+      </address>
     </div>
-    <nav aria-label="Footer">
-      <ul>
-        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-      </ul>
-    </nav>
   </div>
-  <div class="container legal">© {year} {site.name}. All Rights Reserved.</div>
+  <div class="bar">
+    <div class="container">© {year} {site.name}. All Rights Reserved.</div>
+  </div>
 </footer>
 
 <style>
-  .site-footer { background: var(--navy-900); color: #c9d3e3; padding-block: 3.5rem 1.5rem; font-size: .95rem; }
-  .site-footer a { color: #fff; text-decoration: none; }
-  .site-footer a:hover { color: var(--brass-light); text-decoration: underline; }
-  .grid { grid-template-columns: 1.5fr 1fr; gap: 2rem; }
-  .since { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--brass-light); font-weight: 600; margin-bottom: .75rem; }
-  .name { color: #fff; font-family: var(--font-display); font-size: 1.1rem; }
-  ul { list-style: none; padding: 0; margin: 0; columns: 2; }
-  li { margin-bottom: .5rem; }
-  .legal { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,.15); font-size: .85rem; color: #94a3bd; }
-  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  .site-footer { font-size: .95rem; }
+  .main { background: var(--charcoal); color: #e3e3e3; padding-block: 3rem; }
+  .inner { display: flex; justify-content: center; align-items: center; gap: 2.5rem; flex-wrap: wrap; }
+  .brand { text-align: center; }
+  .brand img { margin-inline: auto; }
+  .wordmark { display: block; font-family: var(--font-heading); font-weight: 700; font-size: 2.4rem; letter-spacing: .08em; color: #fff; line-height: 1; }
+  .wordmark small { display: block; font-size: .62rem; letter-spacing: .22em; margin-top: .35rem; font-weight: 500; }
+  .since { color: #fff; font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 1.15rem; margin: .5rem 0 0; }
+  address { font-style: normal; line-height: 1.6; }
+  address strong { color: #fff; font-weight: 400; }
+  .bar { background: var(--charcoal-dark); color: #b0b0b0; text-align: center; padding-block: 1rem; font-size: .88rem; }
 </style>

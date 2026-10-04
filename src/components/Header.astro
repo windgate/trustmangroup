@@ -1,7 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import { nav, site } from '../data/site';
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = Astro.url.pathname.replace(/(\.html)?\/?$/, '') || '/';
 ---
 <header class="site-header">
   <div class="topbar">
@@ -11,22 +11,14 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     </div>
   </div>
   <div class="container bar">
-    <a class="brand" href="/" aria-label={`${site.shortName} home`}>
-      <Logo />
-      <span class="brand-text">
-        <span class="brand-name">Trust Management Group</span>
-        <span class="brand-sub">Since {site.since}</span>
-      </span>
-    </a>
+    <a class="brand" href="/" aria-label={`${site.shortName} home`}><Logo /></a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
     <nav id="primary-nav" aria-label="Primary">
       <ul>
         {nav.map((item) => (
-          <li>
-            <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
-          </li>
+          <li><a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a></li>
         ))}
       </ul>
     </nav>
@@ -34,33 +26,27 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 </header>
 
 <style>
-  .site-header { background: var(--paper); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 50; }
-  .topbar { background: var(--navy-900); font-size: .85rem; }
-  .topbar-inner { display: flex; justify-content: flex-end; gap: 1.5rem; padding-block: .4rem; }
-  .topbar a { color: #dfe5ef; text-decoration: none; }
-  .topbar a:hover { color: var(--brass-light); }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .8rem; }
-  .brand { display: flex; align-items: center; gap: .8rem; text-decoration: none; color: var(--navy-900); }
-  .brand:hover { color: var(--navy-900); }
-  .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-  .brand-name { font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; }
-  .brand-sub { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--brass); font-weight: 600; }
-  nav ul { list-style: none; display: flex; gap: .25rem; margin: 0; padding: 0; }
-  nav a {
-    display: block; padding: .5rem .8rem; text-decoration: none; color: var(--ink);
-    font-size: .93rem; font-weight: 500; border-bottom: 2px solid transparent;
-  }
-  nav a:hover { color: var(--navy-700); border-bottom-color: var(--brass-light); }
-  nav a[aria-current='page'] { color: var(--navy-900); border-bottom-color: var(--brass); font-weight: 600; }
-  .menu-toggle { display: none; background: none; border: 1px solid var(--line); border-radius: var(--radius); padding: .6rem; cursor: pointer; }
-  .menu-toggle span { display: block; width: 22px; height: 2px; background: var(--navy-900); margin: 4px 0; }
+  .site-header { background: #fff; position: sticky; top: 0; z-index: 50; box-shadow: 0 1px 6px rgba(0,0,0,.12); }
+  .topbar { background: var(--burgundy); font-size: .88rem; }
+  .topbar-inner { display: flex; justify-content: flex-end; gap: 1.75rem; padding-block: .3rem; }
+  .topbar a { color: #f0f0f0; text-decoration: none; font-weight: 700; }
+  .topbar a:hover { color: #fff; text-decoration: underline; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .5rem; }
+  .brand { display: block; }
+  .brand :global(img) { width: 118px; height: auto; }
+  nav ul { list-style: none; display: flex; gap: .15rem; margin: 0; padding: 0; }
+  nav a { display: block; padding: .5rem .75rem; text-decoration: none; color: var(--burgundy); font-size: .98rem; font-weight: 700; }
+  nav a:hover { color: var(--navy-blue); }
+  nav a[aria-current='page'] { color: var(--navy-blue); }
+  .menu-toggle { display: none; background: none; border: 0; padding: .6rem; cursor: pointer; }
+  .menu-toggle span { display: block; width: 24px; height: 3px; background: var(--navy-blue); margin: 4px 0; }
 
-  @media (max-width: 880px) {
+  @media (max-width: 900px) {
     .topbar-inner { justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .menu-toggle { display: block; }
-    nav { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--paper); border-bottom: 1px solid var(--line); }
+    nav { display: none; position: absolute; left: 0; right: 0; top: 100%; background: #fff; box-shadow: 0 6px 10px rgba(0,0,0,.12); }
     nav.open { display: block; }
-    nav ul { flex-direction: column; padding: .5rem var(--gutter) 1rem; }
+    nav ul { flex-direction: column; padding: .25rem var(--gutter) 1rem; }
     nav a { padding: .8rem 0; border-bottom: 1px solid var(--line); }
   }
 </style>

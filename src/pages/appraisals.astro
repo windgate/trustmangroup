@@ -2,95 +2,98 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import { appraisal, site } from '../data/site';
+import { firstImage } from '../lib/assets';
+
+const jlaLogo = firstImage('jla-logo.png');
+// Photos from the live Appraisals page; only those present in /public/images are shown
+const candidates: [string[], string][] = [
+  [['58-caddy.jpg'], '1958 Cadillac'],
+  [['aston-martin-06-b.jpg'], 'Aston Martin'],
+  [['hondacivic.jpg', 'hondacivic (1).jpg'], 'Chevy Nova'],
+  [['chevynova04.jpg'], 'Cougar Eliminator'],
+  [['porsche8.jpg'], 'Porsche'],
+  [['supra-2.png'], 'Toyota Supra'],
+  [['jag.jpg'], 'Jaguar'],
+  [['rolls-bonhams.jpg'], 'Rolls-Royce'],
+  [['tr6.jpg', 'tr6-b.jpg'], 'Triumph TR6'],
+  [['double-trouble.jpg'], 'Double Trouble'],
+];
+const gallery = candidates
+  .map(([names, alt]) => ({ src: firstImage(...names), alt }))
+  .filter((g): g is { src: string; alt: string } => Boolean(g.src));
 ---
 <Base title="Appraisals" description="USPAP-compliant motor vehicle appraisals by Gary Matesic for insurance, litigation, diminished value, and Federal Estate Tax purposes. Collections appraised, bought, and sold.">
-  <PageHero title="Appraisal Services" lede="Expert automobile appraisals for insurance, litigation, diminished value, and Federal Estate Tax purposes." />
+  <PageHero title="Appraisal Services" image="canstockphoto6795895-wide.jpg" />
 
   <section class="band">
-    <div class="container layout">
-      <div class="prose">
-        <span class="eyebrow">Motor Vehicle Appraiser</span>
-        <h2>Gary Matesic</h2>
-        <p class="affil">Trust Management Group, LLP / JLA Treasures, LLC</p>
-        <hr class="rule" />
-        {appraisal.intro.map((p) => <p>{p}</p>)}
-        <p><a href={site.vcard} download>Download Gary’s vCard</a></p>
-      </div>
-      <div class="card callout">
-        <h3>Expert Automobile Appraisals</h3>
-        <p>{appraisal.services}</p>
-        <a class="btn btn-primary" href="/contact">Request an appraisal</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="band alt">
     <div class="container">
-      <h2>Career Highlights</h2>
-      <hr class="rule" />
-      <ul class="list-clean list-ticks cols">
-        {appraisal.highlights.map((h) => <li>{h}</li>)}
-      </ul>
+      <div class="prose">
+        <p class="byline"><strong>GARY MATESIC</strong><br /><em>Motor Vehicle Appraiser</em><br />Trust Management Group, LLP / JLA Treasures, LLC</p>
+        {appraisal.intro.map((p) => <p>{p}</p>)}
+        <p><a href={site.vcard} download>Download Gary’s vCard.</a></p>
+      </div>
+
+      <h2 class="sub">Expert Automobile Appraisals by Gary Matesic</h2>
+      <div class="heading-rule"></div>
+      <p class="prose">{appraisal.services} Select a heading below for our experience and credentials in this area.</p>
+
+      <div class="accordions">
+        <details class="accordion" open>
+          <summary>Career Highlights</summary>
+          <div class="body"><ul class="list-clean list-dots">{appraisal.highlights.map((h) => <li>{h}</li>)}</ul></div>
+        </details>
+        <details class="accordion">
+          <summary>Honors, Awards, Appearances</summary>
+          <div class="body">
+            <ul class="list-clean honors">
+              {appraisal.honors.map((h) => <li><span class="yr">{h.year}</span><span>{h.text} <em>({h.car})</em></span></li>)}
+            </ul>
+          </div>
+        </details>
+        <details class="accordion">
+          <summary>Notable Vehicles Appraised</summary>
+          <div class="body"><ul class="list-clean list-dots vehicles">{appraisal.vehicles.map((v) => <li>{v}</li>)}</ul></div>
+        </details>
+      </div>
     </div>
   </section>
 
-  <section class="band">
-    <div class="container grid grid-2 two">
-      <div>
-        <h2>Honors, Awards &amp; Appearances</h2>
-        <hr class="rule" />
-        <ul class="list-clean honors">
-          {appraisal.honors.map((h) => (
-            <li><span class="yr">{h.year}</span><span>{h.text} <em>({h.car})</em></span></li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h2>Notable Vehicles Appraised</h2>
-        <hr class="rule" />
-        <ul class="list-clean list-ticks vehicles">
-          {appraisal.vehicles.map((v) => <li>{v}</li>)}
-        </ul>
+  <section class="band soft">
+    <div class="container affiliate">
+      {jlaLogo && <a href="https://jlatreasures.com" rel="noopener" target="_blank"><img src={jlaLogo} alt="JLA Treasures" width="220" /></a>}
+      <div class="prose">
+        {appraisal.affiliate.map((p) => <p>{p}</p>)}
+        <a class="btn" href="https://jlatreasures.com" rel="noopener" target="_blank">Visit JLA Treasures</a>
       </div>
     </div>
   </section>
 
-  {appraisal.gallery.length > 0 && (
-    <section class="band alt">
+  {gallery.length > 0 && (
+    <section class="band">
       <div class="container">
-        <h2>Vehicles We Have Appraised, Bought, and Sold</h2>
-        <hr class="rule" />
+        <h2>Examples of vehicles we have appraised, bought, and sold for clients over the years.</h2>
+        <div class="heading-rule"></div>
         <div class="gallery">
-          {appraisal.gallery.map((g) => (
-            <a href={g.src}><img src={g.src} alt={g.alt} loading="lazy" decoding="async" /></a>
+          {gallery.map((g) => (
+            <a href={g.src} target="_blank" rel="noopener"><img src={g.src} alt={g.alt} loading="lazy" decoding="async" /></a>
           ))}
         </div>
       </div>
     </section>
   )}
-
-  <section class="band dark">
-    <div class="container prose-wide">
-      <span class="eyebrow" style="color: var(--brass-light)">Affiliate</span>
-      <h2>JLA Treasures, LLC</h2>
-      {appraisal.affiliate.map((p) => <p>{p}</p>)}
-      <a class="btn btn-outline" href="https://jlatreasures.com" rel="noopener" target="_blank">Visit JLA Treasures</a>
-    </div>
-  </section>
 </Base>
 
 <style>
-  .layout { display: grid; grid-template-columns: 1.6fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
-  .affil { color: var(--ink-soft); font-style: italic; margin-top: -.4rem; }
-  .callout { position: sticky; top: 7.5rem; }
-  .cols { columns: 2 340px; column-gap: 3rem; }
-  .cols li { break-inside: avoid; }
-  .two { gap: clamp(2rem, 5vw, 4rem); align-items: start; }
-  .honors li { display: grid; grid-template-columns: 4.2rem 1fr; gap: .5rem; margin-bottom: 1rem; }
-  .yr { font-family: var(--font-display); color: var(--brass); font-weight: 600; font-size: 1.15rem; }
-  .vehicles { columns: 1; }
-  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
-  .gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius); }
-  .prose-wide { max-width: 80ch; }
-  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } .callout { position: static; } }
+  .byline { color: var(--text); line-height: 1.5; }
+  .sub { margin-top: 2.5rem; }
+  .accordions { max-width: 900px; margin-top: 1.25rem; }
+  .honors li { display: grid; grid-template-columns: 4rem 1fr; gap: .5rem; margin-bottom: .9rem; color: var(--muted); }
+  .yr { font-family: var(--font-heading); color: var(--burgundy); font-weight: 500; }
+  .vehicles { columns: 2 260px; column-gap: 2.5rem; }
+  .vehicles li { break-inside: avoid; }
+  .affiliate { display: grid; grid-template-columns: auto 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .affiliate:not(:has(img)) { grid-template-columns: 1fr; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: .9rem; }
+  .gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  @media (max-width: 760px) { .affiliate { grid-template-columns: 1fr; } }
 </style>

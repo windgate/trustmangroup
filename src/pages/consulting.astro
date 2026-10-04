@@ -2,16 +2,31 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import { consultingServices, garyBio } from '../data/site';
+import { firstImage } from '../lib/assets';
+
+// Card photos, in the same order as consultingServices (first file that exists wins)
+const cardImages = [
+  ['canstockphoto75084974-450x400.jpg'],
+  ['estate-management-450400.jpg', 'estate-management-450x400.jpg'],
+  ['consulting-450x400.jpg'],
+  ['litigation-support-450x400.jpg'],
+  ['canstockphoto6094168-450x400.jpg', 'canstockphoto6094168-sq.jpg'],
+  ['canstockphoto17549070-450x400.jpg'],
+  ['canstockphoto14680050-450x400.jpg'],
+];
+const cards = consultingServices.map((s, i) => ({ ...s, image: firstImage(...(cardImages[i] ?? [])) }));
 ---
 <Base title="Consulting" description="Fiduciary reviews, estate management assistance, litigation support, expert witness testimony, trustee selection, investment manager searches, and attorney referrals in Dallas–Fort Worth and across Texas.">
-  <PageHero title="Consulting Services" lede="Practical, experienced guidance for fiduciaries, their advisors, and their counsel." />
+  <PageHero title="Consulting Services" image="canstockphoto92975717.jpg" />
 
   <section class="band">
     <div class="container">
       <div class="grid grid-3">
-        {consultingServices.map((s, i) => (
+        {cards.map((s, i) => (
           <article class="card">
-            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            {s.image
+              ? <img src={s.image} alt="" width="450" height="400" loading="lazy" />
+              : <div class="ph" aria-hidden="true">{String(i + 1).padStart(2, '0')}</div>}
             <h3>{s.title}</h3>
             <p>{s.body}</p>
           </article>
@@ -20,21 +35,21 @@ import { consultingServices, garyBio } from '../data/site';
     </div>
   </section>
 
-  <section class="band alt" id="gary">
+  <section class="band soft" id="gary">
     <div class="container">
-      <span class="eyebrow">Managing Partner</span>
       <h2>Gary Matesic, AEP®, TEP®</h2>
-      <hr class="rule" />
+      <p class="role">Managing Partner · Trust Management Group, LLP</p>
+      <div class="heading-rule"></div>
       <div class="prose">
         {garyBio.intro.map((p) => <p>{p}</p>)}
       </div>
-      <h3 class="hint">Select a heading to read more</h3>
+      <p class="hint">Click on the titles below to read more.</p>
       <div class="accordions">
         {garyBio.sections.map((sec, i) => (
           <details class="accordion" open={i === 0}>
             <summary>{sec.title}</summary>
             <div class="body">
-              <ul class="list-clean list-ticks">
+              <ul class="list-clean list-dots">
                 {sec.items.map((item) => <li>{item}</li>)}
               </ul>
             </div>
@@ -46,6 +61,10 @@ import { consultingServices, garyBio } from '../data/site';
 </Base>
 
 <style>
-  .hint { font-family: var(--font-body); font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; margin: 2rem 0 1rem; }
+  .card img { width: 100%; height: auto; aspect-ratio: 450 / 400; object-fit: cover; margin-bottom: 1rem; }
+  .ph { aspect-ratio: 450 / 400; background: var(--burgundy); color: #fff; font-family: var(--font-heading); font-size: 3rem; display: grid; place-items: center; margin-bottom: 1rem; }
+  .card h3 { color: var(--burgundy); font-size: 1.25rem; }
+  .role { color: var(--burgundy); font-weight: 600; margin-top: -.2rem; }
+  .hint { font-style: italic; margin: 1.5rem 0 .75rem; }
   .accordions { max-width: 860px; }
 </style>

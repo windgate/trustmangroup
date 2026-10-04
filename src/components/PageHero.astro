@@ -1,11 +1,31 @@
 ---
-interface Props { title: string; lede?: string }
-const { title, lede } = Astro.props;
+import { firstImage } from '../lib/assets';
+interface Props { title: string; image?: string }
+const { title, image } = Astro.props;
+const src = image ? firstImage(image) : undefined;
 ---
-<section class="page-hero">
+<!-- Banner photo shown as-is (no color overlay), matching the live site -->
+<section class="page-hero" style={src ? `background-image: url('${src}')` : undefined}>
   <div class="container">
-    <span class="eyebrow" style="color: var(--brass-light)">Trust Management Group</span>
     <h1>{title}</h1>
-    {lede && <p>{lede}</p>}
   </div>
 </section>
+
+<style>
+  .page-hero {
+    background-color: var(--burgundy);
+    background-size: cover;
+    background-position: center;
+    min-height: clamp(200px, 26vw, 320px);
+    display: flex;
+    align-items: center;
+  }
+  h1 {
+    color: #fff;
+    font-weight: 400;
+    font-size: clamp(2rem, 4.6vw, 3.1rem);
+    margin: 0;
+    padding-block: 2rem;
+    text-shadow: 1px 2px 6px rgba(0,0,0,.65);
+  }
+</style>
